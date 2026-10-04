@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Dashboard</h2>
+
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Total Equipment</h3>
+            <p>{{ metrics.total_equipment }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Available</h3>
+            <p>{{ metrics.available }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Borrowed</h3>
+            <p>{{ metrics.borrowed }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Returned</h3>
+            <p>{{ metrics.returned }}</p>
+        </div>
+    </div>
+
+    <div class="equipment-grid">
+        {% for item in equipment %}
+            <div class="card">
+                <img src="{{ item.image_url|default:'https://images.unsplash.com/photo-1516321165247-4aa89a48be28' }}" alt="{{ item.name }}">
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.category }}</p>
+                <p>Available: {{ item.available_quantity }}</p>
+            </div>
+        {% empty %}
+            <p>No equipment available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

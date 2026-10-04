@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page">
+    <h2>Reports</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Equipment</th>
+                <th>Purpose</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Borrowed At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in transactions %}
+                <tr>
+                    <td>{{ record.user.username }}</td>
+                    <td>{{ record.equipment.name }}</td>
+                    <td>{{ record.purpose }}</td>
+                    <td>{{ record.location }}</td>
+                    <td>{{ record.status }}</td>
+                    <td>{{ record.borrowed_at }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="6">No reports available.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page">
+    <h2>Equipment Inventory</h2>
+
+    <div class="inventory-list">
+        {% for item in equipment %}
+            <div class="equipment-item">
+                <img src="{{ item.image_url|default:'https://images.unsplash.com/photo-1516321165247-4aa89a48be28' }}" alt="{{ item.name }}">
+                <div>
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.category }}</p>
+                    <p>{{ item.description }}</p>
+                    <p>Available: {{ item.available_quantity }}</p>
+                    {% if user.is_authenticated and not user.is_staff %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="borrow">
+                            <input type="hidden" name="equipment_id" value="{{ item.id }}">
+                            <input type="text" name="purpose" placeholder="Purpose" required>
+                            <input type="text" name="location" placeholder="Location" required>
+                            <input type="datetime-local" name="due_at">
+                            <button type="submit">Borrow</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No equipment found.</p>
+        {% endfor %}
+    </div>
+
+    <h3>My Borrowings</h3>
+    <div class="borrowings">
+        {% for record in my_borrowings %}
+            <div class="record">
+                <p><strong>{{ record.equipment.name }}</strong></p>
+                <p>Status: {{ record.status }}</p>
+                <p>Borrowed: {{ record.borrowed_at }}</p>
+                <p>Due: {{ record.due_at }}</p>
+            </div>
+        {% empty %}
+            <p>No transactions yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
