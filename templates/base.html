@@ -8,31 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        <div class="brand">SCESystem</div>
-        <div class="nav-links">
-            {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}">Dashboard</a>
-                <a href="{% url 'equipment' %}">Equipment</a>
-                {% if user.is_staff %}
-                    <a href="{% url 'reports' %}">Reports</a>
-                {% endif %}
-                <a href="{% url 'logout' %}">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'register' %}">Register</a>
-            {% endif %}
-        </div>
-    </div>
-
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    {% block content %}{% endblock %}
+    {% block page %}{% endblock %}
 </body>
 </html>

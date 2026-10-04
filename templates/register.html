@@ -1,12 +1,93 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="auth-container">
-    <h2>Create Account</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+{% block title %}Register | SCESystem{% endblock %}
+
+{% block page %}
+<div class="landing-page">
+    <section class="hero-panel">
+        <div class="hero-inner">
+            <div class="brand-mark">
+                <span class="mark-icon">🎓</span>
+            </div>
+
+            <h1>Student Equipment and<br>Returning Management System</h1>
+            <div class="mini-tags">
+                <span>Borrow</span>
+                <span>Return</span>
+                <span>Manage</span>
+                <span>Empower</span>
+            </div>
+            <p>
+                A simple and efficient system for managing school equipment borrowing and returning transactions.
+            </p>
+            <div class="hero-actions">
+                <a href="{% url 'login' %}" class="primary-btn">Log In</a>
+                <a href="#register-card" class="secondary-btn">Create Account</a>
+            </div>
+        </div>
+        <div class="hero-visual"></div>
+    </section>
+
+    <section class="auth-stack">
+        <div class="auth-card login-card">
+            <h2>Welcome Back!</h2>
+            <p>Log in to your account</p>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="field-group">
+                    <label>Email Address</label>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="field-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="field-group select-group">
+                    <label>User Type</label>
+                    <select name="user_type">
+                        <option value="student">Student</option>
+                        <option value="staff">Staff / Faculty</option>
+                    </select>
+                </div>
+                <button type="submit" class="primary-btn full">Log In</button>
+            </form>
+            <div class="auth-link">
+                <span>Don't have an account?</span>
+                <a href="{% url 'register' %}">Create Account</a>
+            </div>
+        </div>
+
+        <div class="auth-card register-card" id="register-card">
+            <h2>Create Account</h2>
+            <p>Join our system and get started</p>
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <div class="field-group">
+                    <label>Full Name</label>
+                    <input type="text" name="first_name" placeholder="Full Name" required>
+                </div>
+                <div class="field-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="field-group">
+                    <label>Password</label>
+                    <input type="password" name="password1" placeholder="Password" required>
+                </div>
+                <div class="field-group select-group">
+                    <label>User Type</label>
+                    <select name="user_type">
+                        <option value="student">Student</option>
+                        <option value="staff">Staff / Faculty</option>
+                    </select>
+                </div>
+                <button type="submit" class="primary-btn full">Register</button>
+            </form>
+            <div class="auth-link">
+                <span>Already have an account?</span>
+                <a href="{% url 'login' %}">Log In</a>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}

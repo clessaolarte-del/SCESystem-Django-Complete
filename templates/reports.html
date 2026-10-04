@@ -1,33 +1,72 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="page">
-    <h2>Reports</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Equipment</th>
-                <th>Purpose</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Borrowed At</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in transactions %}
-                <tr>
-                    <td>{{ record.user.username }}</td>
-                    <td>{{ record.equipment.name }}</td>
-                    <td>{{ record.purpose }}</td>
-                    <td>{{ record.location }}</td>
-                    <td>{{ record.status }}</td>
-                    <td>{{ record.borrowed_at }}</td>
-                </tr>
-            {% empty %}
-                <tr><td colspan="6">No reports available.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block title %}Reports | SCESystem{% endblock %}
+
+{% block page %}
+<div class="dashboard-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-mark small">🎓</div>
+            <span>SERSystem</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'equipment' %}" class="nav-item">
+                <span>🧰</span>
+                <span>Equipment</span>
+            </a>
+            <a href="{% url 'reports' %}" class="nav-item active">
+                <span>📊</span>
+                <span>Reports</span>
+            </a>
+            <a href="{% url 'logout' %}" class="nav-item logout">
+                <span>↩</span>
+                <span>Log Out</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content report-content">
+        <header class="page-header">
+            <div>
+                <h2>Reports</h2>
+                <p>Borrowing, returning and equipment activity.</p>
+            </div>
+            <button class="primary-btn">+ Add Equipment</button>
+        </header>
+
+        <section class="report-table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Equipment</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in transactions %}
+                    <tr>
+                        <td>{{ record.user.username }}</td>
+                        <td>{{ record.equipment.name }}</td>
+                        <td>{{ record.equipment.category }}</td>
+                        <td><span class="status-pill {{ record.status }}">{{ record.status }}</span></td>
+                        <td>{{ record.borrowed_at|date:"Y-m-d" }}</td>
+                        <td><button class="mini-btn">View</button></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6">No reports available.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
 </div>
 {% endblock %}
